@@ -1,10 +1,10 @@
 # TODO:
-- inventory
-- collisions
+- collisions X(kinda)
 - tree seperate rendering
 - tree collisions
-- rock picking
 - rock collisions
+- inventory
+- rock picking
 - crafting
 - building
 - start menu
@@ -12,3 +12,5 @@
 - mobs
 - multiplayer
 - RELEASE!
+- animals
+- farming

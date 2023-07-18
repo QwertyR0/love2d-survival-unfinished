@@ -22,7 +22,7 @@ function GenWorld(seed)
 
     for x = 1, MapW do
         for y = 1, MapH do
-            local chance = love.math.random(1, 3) 
+            local chance = love.math.random(1, 12) 
 
             if World.grid[x][y] == 0 then
                 print(World.grid[x][y])

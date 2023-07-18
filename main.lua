@@ -22,7 +22,7 @@ function love.load()
     camera = Camera.new(Char.x, Char.y)
 
     seed = 10000 * love.math.random()
-    love.math.setRandomSeed( seed )
+    love.math.setRandomSeed(seed)
     GenWorld(seed)
 end
 

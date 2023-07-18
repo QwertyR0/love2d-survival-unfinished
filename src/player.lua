@@ -165,6 +165,7 @@ function PlayerUpdate(dt)
     local oldY = Char.y
 
     Char:update(dt)
+    CheckCollisions(oldX, oldY)
 
     if Char.x - 8*Scale + (Char.empt.LR /2)*Scale < 0 then
         Char.x = 8*Scale - (Char.empt.LR /2)*Scale
@@ -178,15 +179,96 @@ function PlayerUpdate(dt)
         Char.y = 30*16*Scale - 8*Scale
     end
 
-    CheckColissions(oldX, oldY)
-    
-    print(math.floor((Char.x/Scale)/TileW), math.floor((Char.y/Scale)/TileH))
 end
 
-function CheckColissions(oldX, oldY)
-    local gX, gY = math.floor((Char.x/Scale)/TileW)+1, math.floor((Char.y/Scale)/TileH)+1
+function CheckCollisions(oldX, oldY)
+    -- local gX, gY = math.floor((Char.x/Scale)/TileW)+1, math.floor((Char.y/Scale)/TileH)+1
+    -- 
+    -- if World.grid[gX][gY] == 1 then
+    --     print("a")
+    -- end
+
+    local hasCollision = {
+        top = false,
+        topRight = false,
+        right = false,
+        bottomRight = false,
+        bottom = false,
+        bottomLeft = false,
+        left = false,
+        topLeft = false
+    }
+
+    local collisionPoints = {
+        top = {x = Char.x, y = Char.y - 8*Scale},
+        topRight = {x = Char.x + 4*Scale, y = Char.y - 8*Scale},
+        right = {x = Char.x + 4*Scale, y = Char.y},
+        bottomRight = {x = Char.x + 4*Scale, y = Char.y + 8*Scale},
+        bottom = {x = Char.x, y = Char.y + 8*Scale},
+        bottomLeft = {x = Char.x - 4*Scale, y = Char.y + 8*Scale},
+        left = {x = Char.x - 4*Scale, y = Char.y},
+        topLeft = {x = Char.x - 4*Scale, y = Char.y - 8*Scale}
+    }
     
+    for direction, point in pairs(collisionPoints) do
+        local gX = math.floor((point.x/Scale)/TileW) + 1
+        local gY = math.floor((point.y/Scale)/TileH) + 1
+        
+        if gX ~= 0 and gY ~= 0 then
+            if World.grid[gX][gY] == 1 then
+                hasCollision[direction] = true
+            end
+        end
+    end
     
+    if hasCollision.top then
+        Char.y = oldY
+        Char.vely = 0
+    end
+
+    if hasCollision.right then
+        Char.x = oldX
+    end
+    
+    if hasCollision.bottom then
+        Char.y = oldY
+        Char.vely = 0
+    end
+
+    if hasCollision.left then
+        Char.x = oldX
+    end
+
+    if not (hasCollision.left or hasCollision.right or hasCollision.top or hasCollision.bottom) then
+
+        if hasCollision.topRight then
+            Char.x = oldX
+            Char.y = oldY
+            Char.velx = 0
+            Char.vely = 0
+        end
+
+        if hasCollision.bottomRight then
+            Char.x = oldX
+            Char.y = oldY
+            Char.velx = 0
+            Char.vely = 0
+        end
+
+        if hasCollision.bottomLeft then
+            Char.x = oldX
+            Char.y = oldY
+            Char.velx = 0
+            Char.vely = 0
+        end
+
+        if hasCollision.topLeft then
+            Char.x = oldX
+            Char.y = oldY
+            Char.velx = 0
+            Char.vely = 0
+        end
+    end
 end
 
 function PlayerRender()
