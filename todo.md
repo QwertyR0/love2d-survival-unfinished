@@ -1,6 +1,4 @@
 # TODO:
-- tree seperate rendering
-- tree collisions
 - rock collisions
 - inventory
 - rock picking
@@ -10,6 +8,7 @@
 - start menu
 - world create menu
 - mobs
+- optimization
 - multiplayer
 - RELEASE!
 - animals

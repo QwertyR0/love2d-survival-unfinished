@@ -22,7 +22,7 @@ function GenWorld(seed)
 
     for x = 1, MapW do
         for y = 1, MapH do
-            local chance = love.math.random(1, 5) 
+            local chance = love.math.random(1, 5)
 
             if World.grid[x][y] == 0 then
                 if World.grid[x][y-1] == 0 then
@@ -53,15 +53,20 @@ function RenderWorld()
     end
 end
 
-function RenderObjects1()
+function RenderObjects1() -- rendered before
     for k, v in ipairs(World.objects) do
         if v.type == "tree" then
+            if CheckBoxCollision({x = Char.x-5*Scale, y = Char.y-8*Scale, width = 9*Scale, height = 16*Scale}, {x = (v.x-1)*Scale*TileW, y = (v.y-2)*Scale*TileH, width = 12*Scale, height = 16*Scale}) then
+                love.graphics.setColor(1, 1, 1, 0.3)
+            end
+
             love.graphics.draw(Tex["tree1.png"], (v.x-1)*Scale*TileW, (v.y-2)*Scale*TileH, 0, Scale, Scale)
+            love.graphics.setColor(1, 1, 1, 1)
         end
     end
 end
 
-function RenderObjects2()
+function RenderObjects2() -- rendered after
     for k, v in ipairs(World.objects) do
         if v.type == "tree" then
             love.graphics.draw(Tex["tree2.png"], (v.x-1)*Scale*TileW, (v.y-1)*Scale*TileH, 0, Scale, Scale)

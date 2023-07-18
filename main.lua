@@ -10,6 +10,7 @@ function love.load()
     require("src.ui.inGame")
     require("src.helper.spriteSheet")
     require("src.helper.animation")
+    require("src.helper.realHelper")
 
     SpriteSheet:new("playerSheet.png", 16, 16, Scale)
 

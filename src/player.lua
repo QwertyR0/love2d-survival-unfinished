@@ -221,6 +221,17 @@ function CheckCollisions(oldX, oldY)
         end
     end
     
+    for k, v in ipairs(World.objects) do
+        local tcol = GetTreeCollision(v.x, v.y)
+
+        if CheckBoxCollision({x = Char.x-4*Scale, y = Char.y-8*Scale, width = 16*Scale, height = 16*Scale}, tcol) then
+            Char.x = oldX
+            Char.y = oldY
+            Char.velx = 0
+            Char.vely = 0
+        end
+    end
+
     if hasCollision.top then
         Char.y = oldY
         Char.vely = 0

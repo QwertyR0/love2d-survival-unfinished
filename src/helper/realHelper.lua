@@ -35,4 +35,15 @@ local function countEmptyPixels(image, axis, quad)
     return emptyPixelCount
 end
 
+function CheckBoxCollision(box1, box2)
+    return box1.x < box2.x + box2.width and
+           box1.x + box1.width > box2.x and
+           box1.y < box2.y + box2.height and
+           box1.y + box1.height > box2.y
+end
+
+function GetTreeCollision(x, y)
+    return {x = (x-1)*Scale*TileW+7*Scale, y = (y-1)*Scale*TileH, width = 9*Scale, height = 4*Scale}
+end
+
 return {countEmptyPixels = countEmptyPixels}
