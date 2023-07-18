@@ -1,5 +1,4 @@
 # TODO:
-- collisions X(kinda)
 - tree seperate rendering
 - tree collisions
 - rock collisions
@@ -7,6 +6,7 @@
 - rock picking
 - crafting
 - building
+- day/night cycle
 - start menu
 - world create menu
 - mobs
@@ -14,3 +14,4 @@
 - RELEASE!
 - animals
 - farming
+- minimap

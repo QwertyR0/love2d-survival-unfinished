@@ -1,6 +1,7 @@
 local spaceBetween = 10
 local uiScale = 5
 local invScale = 4
+local info = false
 
 UI = {}
 
@@ -38,6 +39,12 @@ function UI.inv(invFrontArr)
 end
 
 function UI.info(seed)
-    love.graphics.print("Seed:", love.graphics.getWidth()-195, 17, 0, 1.5, 1.5)
-    love.graphics.print(tostring(seed), love.graphics.getWidth()-140, 17, 0, 1, 1)
+    if info then
+        love.graphics.print("Seed:", love.graphics.getWidth()-195, 17, 0, 1.5, 1.5)
+        love.graphics.print(tostring(seed), love.graphics.getWidth()-140, 17, 0, 1, 1)
+    end
+end
+
+function ToggleInfo()
+    info = not(info)
 end

@@ -14,8 +14,6 @@ function SpriteSheet:new(imagePath, qw, qh, scale)
     local cols = self.imageDimensions.w / self.qw -- 3
     local rows = self.imageDimensions.h / self.qh -- 4
 
-    print(cols, rows)
-
     for y = 1, rows do
         for x = 1, cols do
             local qframe = love.graphics.newQuad((x-1)*qw, (y-1)*qh, qw, qh, self.imageDimensions.w, self.imageDimensions.h)

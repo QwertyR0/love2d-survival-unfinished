@@ -169,14 +169,14 @@ function PlayerUpdate(dt)
 
     if Char.x - 8*Scale + (Char.empt.LR /2)*Scale < 0 then
         Char.x = 8*Scale - (Char.empt.LR /2)*Scale
-    elseif Char.x + 8*Scale - (Char.empt.LR /2)*Scale > 30*16*Scale then
-        Char.x = 30*16*Scale - 8*Scale + (Char.empt.LR /2)*Scale
+    elseif Char.x + 8*Scale - (Char.empt.LR /2)*Scale > MapW*16*Scale then
+        Char.x = MapW*16*Scale - 8*Scale + (Char.empt.LR /2)*Scale
     end
 
     if Char.y - 8*Scale < 0 then
         Char.y = 8*Scale
-    elseif Char.y + 8*Scale > 30*16*Scale then
-        Char.y = 30*16*Scale - 8*Scale
+    elseif Char.y + 8*Scale > MapH*16*Scale then
+        Char.y = MapH*16*Scale - 8*Scale
     end
 
 end
@@ -214,7 +214,7 @@ function CheckCollisions(oldX, oldY)
         local gX = math.floor((point.x/Scale)/TileW) + 1
         local gY = math.floor((point.y/Scale)/TileH) + 1
         
-        if gX ~= 0 and gY ~= 0 then
+        if gX ~= 0 and gY ~= 0 and gX <= MapW and gY <= MapH then
             if World.grid[gX][gY] == 1 then
                 hasCollision[direction] = true
             end

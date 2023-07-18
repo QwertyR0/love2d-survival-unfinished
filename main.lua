@@ -1,5 +1,5 @@
 local camera
-MapW, MapH, TileH, TileW = 30, 30, 16, 16
+MapW, MapH, TileH, TileW = 50, 50, 16, 16
 local mapRW, mapRH = MapW * TileW * Scale, MapH * TileH * Scale
 local seed = nil
 
@@ -24,6 +24,11 @@ function love.load()
     seed = 10000 * love.math.random()
     love.math.setRandomSeed(seed)
     GenWorld(seed)
+
+    local r = RandomPlayerPos()
+
+    Char.x = r.x*Scale*TileW
+    Char.y = r.y*Scale*TileH
 end
 
 function love.update(dt)
@@ -53,11 +58,18 @@ end
 function love.draw()
     camera:attach()
         RenderWorld()
+        RenderObjects2()
         PlayerRender()
-        RenderObjects()
+        RenderObjects1()
     camera:detach()
 
     UI.heart(Char.hp)
     UI.inv({1, 1, 1, 1})
     UI.info(seed)
+end
+
+function love.keypressed(key)
+    if key == "f1" then
+        ToggleInfo()
+    end
 end
