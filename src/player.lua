@@ -177,8 +177,16 @@ function PlayerUpdate(dt)
     elseif Char.y + 8*Scale > 30*16*Scale then
         Char.y = 30*16*Scale - 8*Scale
     end
+
+    CheckColissions(oldX, oldY)
     
     print(math.floor((Char.x/Scale)/TileW), math.floor((Char.y/Scale)/TileH))
+end
+
+function CheckColissions(oldX, oldY)
+    local gX, gY = math.floor((Char.x/Scale)/TileW)+1, math.floor((Char.y/Scale)/TileH)+1
+    
+    
 end
 
 function PlayerRender()

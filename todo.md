@@ -1,0 +1,14 @@
+# TODO:
+- inventory
+- collisions
+- tree seperate rendering
+- tree collisions
+- rock picking
+- rock collisions
+- crafting
+- building
+- start menu
+- world create menu
+- mobs
+- multiplayer
+- RELEASE!
