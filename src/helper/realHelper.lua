@@ -43,7 +43,22 @@ function CheckBoxCollision(box1, box2)
 end
 
 function GetTreeCollision(x, y)
-    return {x = (x-1)*Scale*TileW+7*Scale, y = (y-1)*Scale*TileH, width = 9*Scale, height = 4*Scale}
+    return {x = (x-1)*Scale*TileW+8*Scale, y = (y-1)*Scale*TileH, width = 8*Scale, height = 4*Scale}
+end
+
+function GetRockCollision(x, y)
+    return {x = (x-1)*Scale*TileW+11*Scale, y = (y-1)*Scale*TileH+9*Scale, width = 3*Scale, height = 6*Scale}
+end
+
+function GetMouseRealPos()
+    local hw = love.graphics.getWidth()/2
+    local hh = love.graphics.getHeight()/2
+    local moX = love.mouse.getX()
+    local moY = love.mouse.getY()
+    local camX = Camera.x-hw
+    local camY = Camera.y-hh
+
+    return {x = moX + camX, y = moY + camY}
 end
 
 return {countEmptyPixels = countEmptyPixels}

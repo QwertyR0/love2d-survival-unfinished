@@ -1,5 +1,4 @@
 # TODO:
-- rock collisions
 - inventory
 - rock picking
 - crafting

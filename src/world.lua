@@ -39,6 +39,26 @@ function GenWorld(seed)
             end
         end
     end
+
+    for x = 1, MapW do
+        for y = 1, MapH do
+            local chance = love.math.random(1, 8)
+
+            if World.grid[x][y] == 0 then
+                if World.grid[x][y-1] == 0 then
+                    for k, v in ipairs(World.objects) do
+                        if v.y == y+1 or (v.y == y and v.x == x) then
+                            chance = 2
+                        end
+                    end
+
+                    if chance == 1 then
+                        table.insert(World.objects, {x = x, y = y, type = "rock"})
+                    end
+                end
+            end
+        end
+    end
 end
 
 function RenderWorld()
@@ -62,6 +82,8 @@ function RenderObjects1() -- rendered before
 
             love.graphics.draw(Tex["tree1.png"], (v.x-1)*Scale*TileW, (v.y-2)*Scale*TileH, 0, Scale, Scale)
             love.graphics.setColor(1, 1, 1, 1)
+        elseif v.type == "rock" then
+            love.graphics.draw(Tex["smallRock.png"], (v.x-1)*Scale*TileW, (v.y-1)*Scale*TileH, 0, Scale, Scale)
         end
     end
 end

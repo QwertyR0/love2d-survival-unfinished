@@ -222,13 +222,24 @@ function CheckCollisions(oldX, oldY)
     end
     
     for k, v in ipairs(World.objects) do
-        local tcol = GetTreeCollision(v.x, v.y)
+        if v.type == "tree" then
+            local tcol = GetTreeCollision(v.x, v.y)
 
-        if CheckBoxCollision({x = Char.x-4*Scale, y = Char.y-8*Scale, width = 16*Scale, height = 16*Scale}, tcol) then
-            Char.x = oldX
-            Char.y = oldY
-            Char.velx = 0
-            Char.vely = 0
+            if CheckBoxCollision({x = Char.x-4*Scale, y = Char.y-8*Scale, width = 16*Scale, height = 16*Scale}, tcol) then
+                Char.x = oldX
+                Char.y = oldY
+                Char.velx = 0
+                Char.vely = 0
+            end
+        elseif v.type == "rock" then
+            local rcol = GetRockCollision(v.x, v.y)
+
+            if CheckBoxCollision({x = Char.x-4*Scale, y = Char.y-8*Scale, width = 16*Scale, height = 16*Scale}, rcol) then
+                Char.x = oldX
+                Char.y = oldY
+                Char.velx = 0
+                Char.vely = 0
+            end
         end
     end
 
