@@ -11,8 +11,8 @@ function SpriteSheet:new(imagePath, qw, qh, scale)
     self.scale = scale or 1
     self.quads = {}
 
-    local cols = self.imageDimensions.w / self.qw -- 3
-    local rows = self.imageDimensions.h / self.qh -- 4
+    local cols = self.imageDimensions.w / self.qw
+    local rows = self.imageDimensions.h / self.qh
 
     for y = 1, rows do
         for x = 1, cols do

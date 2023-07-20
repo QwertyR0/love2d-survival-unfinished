@@ -33,6 +33,8 @@ function Player:new(x, y)
     self.velx = 0
     self.vely = 0
     self.currentAnimation = "front"
+    self.selected = 1
+    self.inventory = {{id = "apple", number = 1}, {id = "apple", number = 1}, {id = "bread", number = 2}, {id = "bread", number = 2}, {id = "bread", number = 2}, {id = "bread", number = 2}}
     self.__index = self
 
     self.empt = {
@@ -178,7 +180,6 @@ function PlayerUpdate(dt)
     elseif Char.y + 8*Scale > MapH*16*Scale then
         Char.y = MapH*16*Scale - 8*Scale
     end
-
 end
 
 function CheckCollisions(oldX, oldY)

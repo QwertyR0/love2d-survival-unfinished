@@ -57,8 +57,8 @@ function AnimationS:stop()
         self.currentFrame = self.animSeq[1]
     end
     self.instance:setFrame(self.currentFrame)
-    self.elapsedTime = 0;
-    self.animIndex = 1;
+    self.elapsedTime = 0
+    self.animIndex = 1
 end
 
 function AnimationS:pause()
