@@ -61,4 +61,9 @@ function GetMouseRealPos()
     return {x = moX + camX, y = moY + camY}
 end
 
+-- TODO:
+function PlayerSpawn(seed)
+    -- this will be used for deletin spawn objects
+end
+
 return {countEmptyPixels = countEmptyPixels}

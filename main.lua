@@ -12,16 +12,16 @@ function love.load()
     require("src.helper.spriteSheet")
     require("src.helper.animation")
     require("src.helper.realHelper")
-    require("src.mouseHover")
     require("src.ui.inventory")
-    UI.init()
-
-    SpriteSheet:new("playerSheet.png", 16, 16, Scale)
-
+    require("src.mouseHover")
+    require("src.helper.buttons")
     Cam = require("libs.hump.camera")
     
-    Char = Player:new()
+    UI.init()
+    SpriteSheet:new("playerSheet.png", 16, 16, Scale)
+
     
+    Char = Player:new()
     Char.hp = 3
     
     Camera = Cam.new(Char.x, Char.y)
@@ -84,4 +84,8 @@ function love.keypressed(key)
     end
 
     inv:keyPressed(key)
+end
+
+function love.mousepressed(x, y, button, istouch)
+    ButtonsClick(x, y, button, istouch)
 end
