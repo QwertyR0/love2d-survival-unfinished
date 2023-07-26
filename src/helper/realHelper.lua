@@ -94,5 +94,33 @@ function IsOutOfBounds(x, y, width, height)
     end
 end
 
+local items = {
+    apple = {
+        description = "A very tasty fruit",
+        max = 10,
+        eat = {
+            health = 1,
+            power = nil
+        }
+    },
+    bread = {
+        description = "bread bread bread",
+        max = 5,
+        eat = {
+            health = 2,
+            power = nil
+        }
+    }
+}
+
+function GetItemInfo(name)
+    local info = items[name]
+
+    if info then
+        return info
+    else
+        return false
+    end
+end
 
 return {countEmptyPixels = countEmptyPixels}

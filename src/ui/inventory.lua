@@ -28,7 +28,7 @@ end
 
 local function onInvButtonPress(x, y, button, istouch, id)
     local bPlace = tonumber(StrSplit(id)[2])
-    
+
     if not (x >= Inv.smallWindow.x and x <= Inv.smallWindow.x+TexSize["ui/smallWindow.png"].w*Inv.scale and y >= Inv.smallWindow.y and y <= Inv.smallWindow.y+TexSize["ui/smallWindow.png"].h*Inv.scale and Inv.smallWindow.enabled) then
         if Inv.smallWindow.itemSel == bPlace and Inv.smallWindow.enabled then
             Inv.smallWindow.enabled = false
@@ -64,7 +64,7 @@ function Inventory:new()
     for i = 1, 10 do
         local row = math.ceil(i / itemsPerRow)
         local column = (i - 1) % itemsPerRow + 1
-        
+
         local bx = love.graphics.getWidth()/2 - 200 + (column - 1) * spaceBetween
         local by = love.graphics.getHeight()/2 - 120 + (row - 1) * 120
 
@@ -139,7 +139,7 @@ end
 function Inventory:mousePressed(x, y, button)
     self.smallWindow:clicked(x, y, button)
 
-    if (x >= self.smallWindow.x and x <= self.smallWindow.x+TexSize["ui/smallWindow.png"].w*self.scale and y >= self.smallWindow.y and y <= self.smallWindow.y+TexSize["ui/smallWindow.png"].h*self.scale and self.smallWindow.enabled) then
+    if (x >= self.smallWindow.x and x <= self.smallWindow.x + TexSize["ui/smallWindow.png"].w * self.scale and y >= self.smallWindow.y and y <= self.smallWindow.y + TexSize["ui/smallWindow.png"].h * self.scale and self.smallWindow.enabled) then
         clickedInside = true
     else
         clickedInside = false

@@ -93,7 +93,7 @@ function RenderObjects2() -- rendered after
         if v.type == "tree" then
             love.graphics.draw(Tex["tree2.png"], (v.x-1)*Scale*TileW, (v.y-1)*Scale*TileH, 0, Scale, Scale)
         end
-    end 
+    end
 end
 
 function RandomPlayerPos()
