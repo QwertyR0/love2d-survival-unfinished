@@ -23,7 +23,10 @@ files_to_zip = [
 # ALL CREDIT GOES TO THE ORIGINAL CREATORS
 # HUMP: https://github.com/vrld/hump
 
-if not os.path.exists("../libs/camera.lua"):
+if not os.path.exists("../libs/"):
+    os.makedirs("../libs/")
+    wget.download("https://raw.githubusercontent.com/vrld/hump/master/camera.lua", "../libs")
+elif not os.path.exists("../libs/camera.lua"):
     wget.download("https://raw.githubusercontent.com/vrld/hump/master/camera.lua", "../libs")
 
 with zipfile.ZipFile("../64game.love", 'w') as zipf:
