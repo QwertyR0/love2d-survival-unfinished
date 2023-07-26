@@ -2,7 +2,7 @@ Camera = nil
 MapW, MapH, TileH, TileW = 50, 50, 16, 16
 local mapRW, mapRH = MapW * TileW * Scale, MapH * TileH * Scale
 local seed = nil
-local inv
+Inv = nil
 
 function love.load()
     require("src.helper.textures")
@@ -15,7 +15,7 @@ function love.load()
     require("src.ui.inventory")
     require("src.mouseHover")
     require("src.helper.buttons")
-    Cam = require("libs.hump.camera")
+    Cam = require("libs.camera")
     
     UI.init()
     SpriteSheet:new("playerSheet.png", 16, 16, Scale)
@@ -35,7 +35,7 @@ function love.load()
     Char.x = r.x*Scale*TileW
     Char.y = r.y*Scale*TileH
 
-    inv = Inventory:new()
+    Inv = Inventory:new()
 end
 
 function love.update(dt)
@@ -73,8 +73,8 @@ function love.draw()
     Camera:detach()
 
     UI.heart(Char.hp)
-    UI.inv(inv)
-    inv:draw()
+    UI.inv(Inv)
+    Inv:draw()
     UI.info(seed)
 end
 
@@ -83,9 +83,10 @@ function love.keypressed(key)
         ToggleInfo()
     end
 
-    inv:keyPressed(key)
+    Inv:keyPressed(key)
 end
 
 function love.mousepressed(x, y, button, istouch)
     ButtonsClick(x, y, button, istouch)
+    Inv:mousePressed(x, y, button)
 end

@@ -2,3 +2,6 @@ demo/
 .vscode/
 todo.md
 %USERPROFILE%/
+libs/camera.lua
+64game.love
+64game.zip

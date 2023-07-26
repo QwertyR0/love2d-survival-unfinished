@@ -23,7 +23,15 @@ local function itemPlace(item, place, s)
 end
 
 local function onInvButtonPress(x, y, button, istouch, id)
-    print(id, x, y)
+    local bPlace = StrSplit(id)[2]
+
+    if Inv.smallWindow.itemSel == id and Inv.smallWindow.enabled then
+        Inv.smallWindow.enabled = false
+    else
+        Inv.smallWindow.enabled = true
+        Inv.smallWindow.itemSel = id
+        Inv.smallWindow.setPos()
+    end
 end
 
 Inventory = {}
@@ -47,6 +55,10 @@ function Inventory:new()
         Button:new("rectangle", bx, by, 8.9*Scale, 12.7*Scale, 1, onInvButtonPress, ("inv: " .. tostring(i)))
     end
 
+    local SW = require("src.ui.invItemSettings")
+    SW = SW.itemMenu
+    self.smallWindow = SW:new()
+
     return self
 end
 
@@ -62,6 +74,8 @@ function Inventory:draw()
         for i = 6, #Char.inventory do
             itemPlace(Char.inventory[i], i-5, self.font20)
         end
+
+        self.smallWindow:render()
     end
 end
 
@@ -99,7 +113,5 @@ function Inventory:keyPressed(key)
 end
 
 function Inventory:mousePressed(x, y, button)
-    if button == 1 and self.enable then
-        
-    end
+    self.smallWindow:clicked(x, y, button)
 end

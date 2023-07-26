@@ -13,19 +13,19 @@ end
 function UI.heart(charHealth)
     if charHealth >= 1 then
         love.graphics.draw(Tex["ui/heartF.png"], 3, 5, 0, uiScale, uiScale)
-    else 
+    else
         love.graphics.draw(Tex["ui/heartE.png"], 3, 5, 0, uiScale, uiScale)
     end
-    
+
     if charHealth >= 2 then
         love.graphics.draw(Tex["ui/heartF.png"], (3 + 8*uiScale + spaceBetween), 5, 0, uiScale, uiScale)
-    else 
+    else
         love.graphics.draw(Tex["ui/heartE.png"], (3 + 8*uiScale + spaceBetween), 5, 0, uiScale, uiScale)
     end
-    
+
     if charHealth >= 3 then
         love.graphics.draw(Tex["ui/heartF.png"], (3 + 8*uiScale*2 + spaceBetween*2), 5, 0, uiScale, uiScale)
-    else 
+    else
         love.graphics.draw(Tex["ui/heartE.png"], (3 + 8*uiScale*2 + spaceBetween*2), 5, 0, uiScale, uiScale)
     end
 end

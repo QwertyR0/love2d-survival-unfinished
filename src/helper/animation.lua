@@ -20,17 +20,17 @@ end
 function AnimationS:update(dt)
     if self.isPlaying == true then
         self.elapsedTime = self.elapsedTime + dt
- 
+
         if self.elapsedTime >= self.delay then
             -- if animation sequence is provided:
             if self.animSeq ~= nil then
                 self.animIndex = self.animIndex + 1
-                
+
                 if self.animIndex > #self.animSeq then
                     self.animIndex = 1
                 end
 
-                self.currentFrame = self.animSeq[self.animIndex];
+                self.currentFrame = self.animSeq[self.animIndex]
             else -- else progress through normally
                 self.currentFrame = self.currentFrame + 1
 
@@ -40,8 +40,8 @@ function AnimationS:update(dt)
             end
 
             self.elapsedTime = 0
-            
         end
+
         self.instance:setFrame(self.currentFrame)
     end
 end

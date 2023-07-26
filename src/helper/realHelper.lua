@@ -66,4 +66,18 @@ function PlayerSpawn(seed)
     -- this will be used for deletin spawn objects
 end
 
+function StrSplit(str)
+    local words = {}
+    
+    for word in str:gmatch("%S+") do
+        table.insert(words, word)
+    end
+    
+    return words
+end
+
+local function locateSmallWinow()
+
+end
+
 return {countEmptyPixels = countEmptyPixels}
