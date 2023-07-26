@@ -61,6 +61,7 @@ function love.update(dt)
 
     PlayerUpdate(dt)
     HoverUpdate()
+    Inv:update()
 end
 
 function love.draw()

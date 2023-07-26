@@ -76,8 +76,23 @@ function StrSplit(str)
     return words
 end
 
-local function locateSmallWinow()
-
+function StrStartsWith(String1, String2)
+	local Count = #String1
+	local FirstChars = string.sub(String2, 1, Count)
+	return FirstChars == String1
 end
+
+function IsOutOfBounds(x, y, width, height)
+    local screenWidth = love.graphics.getWidth()
+    local screenHeight = love.graphics.getHeight()
+
+    -- Check if the rectangle is out of the screen's bounds
+    if x < 0 or x + width > screenWidth or y < 0 or y + height > screenHeight then
+        return true
+    else
+        return false
+    end
+end
+
 
 return {countEmptyPixels = countEmptyPixels}

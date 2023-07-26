@@ -1,4 +1,4 @@
--- Code by Blendi Goose
+-- textures.lua by Blendi Goose
 
 Tex = {}
 TexSize = {}

@@ -1,6 +1,8 @@
 local spaceBetween = 85
 local itemScale = 5
 local itemsPerRow = 5
+local closeSum = 0
+local clickedInside = false
 
 local function itemPlace(item, place, s)
     if place <= 10 then
@@ -22,17 +24,31 @@ local function itemPlace(item, place, s)
     end
 end
 
-local function onInvButtonPress(x, y, button, istouch, id)
-    local bPlace = StrSplit(id)[2]
+        -- MM DUCTAPE THERE PUT SOME HERE TOO
 
-    if Inv.smallWindow.itemSel == id and Inv.smallWindow.enabled then
-        Inv.smallWindow.enabled = false
-    else
-        Inv.smallWindow.enabled = true
-        Inv.smallWindow.itemSel = id
-        Inv.smallWindow.setPos()
+local function onInvButtonPress(x, y, button, istouch, id)
+    local bPlace = tonumber(StrSplit(id)[2])
+    
+    if not (x >= Inv.smallWindow.x and x <= Inv.smallWindow.x+TexSize["ui/smallWindow.png"].w*Inv.scale and y >= Inv.smallWindow.y and y <= Inv.smallWindow.y+TexSize["ui/smallWindow.png"].h*Inv.scale and Inv.smallWindow.enabled) then
+        if Inv.smallWindow.itemSel == bPlace and Inv.smallWindow.enabled then
+            Inv.smallWindow.enabled = false
+        elseif Char.inventory[bPlace + 5] then -- SMELLS LIKE  DUCKGTAPE
+            Inv.smallWindow.enabled = true
+            Inv.smallWindow.itemSel = bPlace -- PUT SOME HERE TOOO MHMHMMM
+            Inv.smallWindow:setPos()
+        end
     end
 end
+
+local function onNotInvButtonPress(x, y, button, istouch, id)
+    local bPlace = tonumber(StrSplit(id)[2])
+
+    if StrStartsWith("inv:", id) and Char.inventory[bPlace + 5] then
+        closeSum = (closeSum or 0) + 1
+    end
+end
+
+-- sorry I started to lose my mind
 
 Inventory = {}
 Inventory.__index = Inventory
@@ -52,7 +68,7 @@ function Inventory:new()
         local bx = love.graphics.getWidth()/2 - 200 + (column - 1) * spaceBetween
         local by = love.graphics.getHeight()/2 - 120 + (row - 1) * 120
 
-        Button:new("rectangle", bx, by, 8.9*Scale, 12.7*Scale, 1, onInvButtonPress, ("inv: " .. tostring(i)))
+        Button:new("rectangle", bx, by, 8.9*Scale, 12.7*Scale, 1, onInvButtonPress, ("inv: " .. tostring(i)), onNotInvButtonPress)
     end
 
     local SW = require("src.ui.invItemSettings")
@@ -63,7 +79,11 @@ function Inventory:new()
 end
 
 function Inventory:update()
+    if closeSum >= #Char.inventory - 5 and clickedInside == false then
+        self.smallWindow.enabled = false
+    end
 
+    closeSum = 0
 end
 
 function Inventory:draw()
@@ -109,9 +129,19 @@ function Inventory:keyPressed(key)
 
     if key == "tab" then
         self:toggle()
+
+        if self.enable then
+            self.smallWindow.enabled = false
+        end
     end
 end
 
 function Inventory:mousePressed(x, y, button)
     self.smallWindow:clicked(x, y, button)
+
+    if (x >= self.smallWindow.x and x <= self.smallWindow.x+TexSize["ui/smallWindow.png"].w*self.scale and y >= self.smallWindow.y and y <= self.smallWindow.y+TexSize["ui/smallWindow.png"].h*self.scale and self.smallWindow.enabled) then
+        clickedInside = true
+    else
+        clickedInside = false
+    end
 end

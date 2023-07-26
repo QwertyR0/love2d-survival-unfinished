@@ -2,6 +2,8 @@ import wget
 import zipfile
 import os
 
+BundleName = "64Game"
+
 def add_folder_to_zip(zipf, folder_path, base_path=""):
     for root, _, files in os.walk(folder_path):
         for file in files:
@@ -29,7 +31,7 @@ if not os.path.exists("../libs/"):
 elif not os.path.exists("../libs/camera.lua"):
     wget.download("https://raw.githubusercontent.com/vrld/hump/master/camera.lua", "../libs")
 
-with zipfile.ZipFile("../64game.love", 'w') as zipf:
+with zipfile.ZipFile(f"../{BundleName}.love", 'w') as zipf:
     for file_path, arcname in files_to_zip:
         if file_path.endswith('/'):
             add_folder_to_zip(zipf, file_path, arcname)

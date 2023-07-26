@@ -34,11 +34,12 @@ function Player:new(x, y)
     self.vely = 0
     self.currentAnimation = "front"
     self.selected = 1
-    self.inventory = {{id = "apple", number = 1}, {id = "apple", number = 1}, {id = "bread", number = 2}, {id = "bread", number = 2}, {id = "bread", number = 2}, {id = "bread", number = 2}}
+    self.inventory = {{id = "apple", number = 1}, {id = "apple", number = 1},{id = "apple", number = 1},{id = "apple", number = 1},{id = "apple", number = 1},{id = "apple", number = 1},{id = "apple", number = 1}, {id = "bread", number = 2}, {id = "bread", number = 2}, {id = "bread", number = 2}, {id = "bread", number = 2}, {id = "bread", number = 2}, {id = "bread", number = 2}}
     self.__index = self
 
     self.empt = {
         LR = 8 -- NOTE: implement this crap before it's too late...
+               -- NOTE2: It's too late
     }
 
     self.sheet = SpriteSheet:new("playerSheet.png", 16, 16, Scale)
