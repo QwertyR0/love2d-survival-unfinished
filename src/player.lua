@@ -38,8 +38,8 @@ function Player:new(x, y)
     self.__index = self
 
     self.empt = {
-        LR = 8 -- NOTE: implement this crap before it's too late...
-               -- NOTE2: It's too late
+        LR = 8 -- NOTE : implement this crap before it's too late...
+               -- NOTE 2 : It's too late
     }
 
     self.sheet = SpriteSheet:new("playerSheet.png", 16, 16, Scale)
@@ -140,12 +140,12 @@ function PlayerUpdate(dt)
         Char.currentAnimation = "front"
     end
 
-    if love.keyboard.isDown("a") then
+    if love.keyboard.isDown("a") and not love.keyboard.isDown("d") then
         Char:accelerate("x", -1, dt)
         Char.currentAnimation = "left"
     end
     
-    if love.keyboard.isDown("d") then
+    if love.keyboard.isDown("d") and not love.keyboard.isDown("a") then
         Char:accelerate("x", 1, dt)
         Char.currentAnimation = "right"
     end

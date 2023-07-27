@@ -2,12 +2,10 @@ local spaceBetween = 10
 local uiScale = 5
 local invScale = 4
 local info = false
-local fontt
 
 UI = {}
 
 function UI.init()
-    fontt = love.graphics.getFont()
 end
 
 function UI.heart(charHealth)
@@ -60,14 +58,14 @@ end
 
 function UI.info(seed)
     if info then
-        love.graphics.setFont(fontt)
+        love.graphics.setFont(Fonts.default)
 
-        love.graphics.print("Seed:", love.graphics.getWidth()-195, 17, 0, 1.5, 1.5)
-        love.graphics.print(tostring(seed), love.graphics.getWidth()-140, 17, 0, 1, 1)
-        love.graphics.print("X:", love.graphics.getWidth()-195, 37, 0, 1.5, 1.5)
-        love.graphics.print(tostring(Char.x/Scale), love.graphics.getWidth()-140, 39, 0, 1, 1)
-        love.graphics.print("Y:", love.graphics.getWidth()-195, 50, 0, 1.5, 1.5)
-        love.graphics.print(tostring(Char.y/Scale), love.graphics.getWidth()-140, 55, 0, 1, 1)
+        love.graphics.print("Seed:", love.graphics.getWidth() - 195, 17, 0, 1.5, 1.5)
+        love.graphics.print(tostring(seed), love.graphics.getWidth() - 140, 17, 0, 1, 1)
+        love.graphics.print("X:", love.graphics.getWidth() - 195, 37, 0, 1.5, 1.5)
+        love.graphics.print(tostring(Char.x / Scale), love.graphics.getWidth() - 140, 39, 0, 1, 1)
+        love.graphics.print("Y:", love.graphics.getWidth() - 195, 50, 0, 1.5, 1.5)
+        love.graphics.print(tostring(Char.y / Scale), love.graphics.getWidth() - 140, 55, 0, 1, 1)
     end
 end
 

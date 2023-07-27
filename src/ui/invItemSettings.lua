@@ -1,6 +1,6 @@
 --[[    DISCLAIMER:
 
-        THIS UI CODE IS HOLD WITH DUCkTAPE AND CARDBOARD
+        THIS UI CODE IS HOLD WITH DUCKTAPE AND CARDBOARD
         DON'T BE MAD I WAS TIRED
         I ALSO DISPISE THIS CODE
         Sorry about that
@@ -20,24 +20,29 @@ function itemMenu:new()
     return self
 end
 
-function itemMenu:update()
-end
-
 function itemMenu:render()
     if self.enabled then
         love.graphics.draw(Tex["ui/smallWindow.png"], self.x, self.y, 0, Inv.scale, Inv.scale)
+        love.graphics.setFont(Fonts.medium)
+        local idX = self.x + TexSize["ui/smallWindow.png"].hw * Inv.scale - Fonts.medium:getWidth(self.properties.id) / 2
+        love.graphics.print(self.properties.id, idX, self.y + 8 * Inv.scale)
+
+        local buttonX = self.x + TexSize["ui/smallWindow.png"].hw * Inv.scale - TexSize["ui/wideButton.png"].hw * Inv.scale
+        local buttonY = self.y + TexSize["ui/smallWindow.png"].h*Inv.scale - 20 * Inv.scale
+        local sTextX = buttonX + TexSize["ui/wideButton.png"].hw * Inv.scale - Fonts.tiny:getWidth("Set Place") / 2
+        local sTextY = buttonY + TexSize["ui/wideButton.png"].hh * Inv.scale - Fonts.tiny:getLineHeight() / 2
+        love.graphics.draw(Tex["ui/wideButton.png"], buttonX, buttonY, 0, Inv.scale, Inv.scale)
+        love.graphics.setFont(Fonts.tiny)
+        love.graphics.print("Set Place", sTextX, sTextY)
+
+        love.graphics.setFont(Fonts.small)
+        local aText = ("Amount: " .. tostring(self.properties.amount).. "/" .. tostring(self.properties.max))
+        local adX = (self.x + TexSize["ui/smallWindow.png"].hw * Inv.scale - Fonts.small:getWidth(aText) / 2) - 6 * Inv.scale
+        love.graphics.print(aText, adX, self.y + 20 * Inv.scale)
     end
 end
 
-function itemMenu:clicked(x, y, button)
-    -- if not (x >= self.x and x <= self.x+TexSize["ui/smallWindow.png"].w*Inv.scale and y >= self.y and y <= self.y+TexSize["ui/smallWindow.png"].h*Inv.scale) then
-    --     if Inv.enable and self.enabled and button == 1 then
-    --         -- self.enabled = false
-    --     end
-    -- end
-end
-
-function itemMenu:setPos()
+function itemMenu:set()
     local row = math.ceil(self.itemSel / 5)
     local column = (self.itemSel - 1) % 5 + 1
     
@@ -49,11 +54,16 @@ function itemMenu:setPos()
     + (14 * Inv.scale)
     + ((column - 1) * 25 * Inv.scale)
 
-    if IsOutOfBounds(predictX, self.y, TexSize["ui/smallWindow.png"].w, TexSize["ui/smallWindow.png"].h) then
+    if IsOutOfBounds(predictX, self.y, TexSize["ui/smallWindow.png"].w * Inv.scale, TexSize["ui/smallWindow.png"].h * Inv.scale) then
         predictX = predictX - 80 * Inv.scale
     end
 
     self.x = predictX
+
+    -- properties:
+    local prop = GetItemInfo(Char.inventory[self.itemSel + 5].id)
+    prop.amount = Char.inventory[self.itemSel + 5].number
+    self.properties = prop
 end
 
 return { itemMenu = itemMenu }

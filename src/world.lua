@@ -115,3 +115,6 @@ function RandomPlayerPos()
 
     return spawnables[math.random(1, #spawnables)]
 end
+
+--      "Yep, this will do it. Pretty self explainary."
+--          - A Wise Man

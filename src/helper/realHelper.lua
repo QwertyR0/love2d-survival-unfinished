@@ -1,3 +1,12 @@
+Fonts = {
+    default = love.graphics.getFont(),
+    tiny = love.graphics.newFont(15),
+    small = love.graphics.newFont(20),
+    medium = love.graphics.newFont(30),
+    big = love.graphics.newFont(40),
+    huge = love.graphics.newFont(50)
+}
+    
 local function countEmptyPixels(image, axis, quad)
     local emptyPixelCount = 0
     local quadX, quadY, quadW, quadH = quad:getViewport()
@@ -96,6 +105,7 @@ end
 
 local items = {
     apple = {
+        id = "apple",
         description = "A very tasty fruit",
         max = 10,
         eat = {
@@ -104,6 +114,7 @@ local items = {
         }
     },
     bread = {
+        id = "bread",
         description = "bread bread bread",
         max = 5,
         eat = {
