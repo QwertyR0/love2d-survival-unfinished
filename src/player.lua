@@ -39,7 +39,7 @@ function Player:new(x, y)
 
     self.empt = {
         LR = 8 -- NOTE : implement this crap before it's too late...
-               -- NOTE 2 : It's too late
+               -- NOTE2 : It's too late
     }
 
     self.sheet = SpriteSheet:new("playerSheet.png", 16, 16, Scale)

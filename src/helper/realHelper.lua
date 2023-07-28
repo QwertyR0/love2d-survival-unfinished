@@ -109,6 +109,7 @@ local items = {
         description = "A very tasty fruit",
         max = 10,
         eat = {
+            eatable = true,
             health = 1,
             power = nil
         }
@@ -118,6 +119,7 @@ local items = {
         description = "bread bread bread",
         max = 5,
         eat = {
+            eatable = false,
             health = 2,
             power = nil
         }

@@ -24,7 +24,7 @@ end
 function ButtonsClick(x, y, button, istouch)
     for i = 1, #Buttons do
         if Buttons[i].type == "rectangle" then
-            if x >= Buttons[i].x and x <= Buttons[i].x+Buttons[i].width and y >= Buttons[i].y and y <= Buttons[i].y+Buttons[i].height then
+            if x >= Buttons[i].x and x <= Buttons[i].x + Buttons[i].width and y >= Buttons[i].y and y <= Buttons[i].y+Buttons[i].height then
                 Buttons[i].onClick(x, y, button, istouch, Buttons[i].id)
             else
                 if Buttons[i].onNotClick then
@@ -32,7 +32,7 @@ function ButtonsClick(x, y, button, istouch)
                 end
             end
         elseif Buttons[i].type == "circle" then
-            if math.sqrt((Buttons[i].x-x+Buttons[i].width)^2+(Buttons[i].y-y+Buttons[i].width)^2) <= Buttons[i].width then
+            if math.sqrt((Buttons[i].x-x+Buttons[i].width)^2 + (Buttons[i].y-y+Buttons[i].width)^2) <= Buttons[i].width then
                 Buttons[i].onClick(x, y, button, istouch, Buttons[i].id)
             else
                 if Buttons[i].onNotClick then

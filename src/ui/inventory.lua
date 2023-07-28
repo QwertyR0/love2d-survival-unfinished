@@ -3,6 +3,7 @@ local itemScale = 5
 local itemsPerRow = 5
 local closeSum = 0
 local clickedInside = false
+InvScale = 3.5
 
 local function itemPlace(item, place, s)
     if place <= 10 then
@@ -29,7 +30,7 @@ end
 local function onInvButtonPress(x, y, button, istouch, id)
     local bPlace = tonumber(StrSplit(id)[2])
 
-    if not (x >= Inv.smallWindow.x and x <= Inv.smallWindow.x+TexSize["ui/smallWindow.png"].w*Inv.scale and y >= Inv.smallWindow.y and y <= Inv.smallWindow.y+TexSize["ui/smallWindow.png"].h*Inv.scale and Inv.smallWindow.enabled) then
+    if not (x >= Inv.smallWindow.x and x <= Inv.smallWindow.x+TexSize["ui/smallWindow.png"].w*InvScale and y >= Inv.smallWindow.y and y <= Inv.smallWindow.y+TexSize["ui/smallWindow.png"].h*InvScale and Inv.smallWindow.enabled) then
         if Inv.smallWindow.itemSel == bPlace and Inv.smallWindow.enabled then
             Inv.smallWindow.enabled = false
         elseif Char.inventory[bPlace + 5] then -- SMELLS LIKE  DUCKGTAPE
@@ -56,7 +57,6 @@ Inventory.__index = Inventory
 function Inventory:new()
     self = setmetatable({}, Inventory)
     self.enable = false
-    self.scale = 3.5
     self.selected = 1
 
     for i = 1, 10 do
@@ -87,7 +87,7 @@ end
 function Inventory:draw()
     if self.enable then
         love.graphics.setFont(Fonts.medium)
-        love.graphics.draw(Tex["ui/invBig.png"], love.graphics.getWidth()/2-TexSize["ui/invBig.png"].hw*self.scale, love.graphics.getHeight()/2-TexSize["ui/invBig.png"].hh*self.scale, 0, self.scale, self.scale)
+        love.graphics.draw(Tex["ui/invBig.png"], love.graphics.getWidth()/2-TexSize["ui/invBig.png"].hw*InvScale, love.graphics.getHeight()/2-TexSize["ui/invBig.png"].hh*InvScale, 0, InvScale, InvScale)
         love.graphics.print("Inventory:", love.graphics.getWidth()/2-73, love.graphics.getHeight()/2-185)
         for i = 6, #Char.inventory do
             itemPlace(Char.inventory[i], i-5, Fonts.small)
@@ -141,7 +141,7 @@ end
 
 function Inventory:mousePressed(x, y, button)
 
-    if (x >= self.smallWindow.x and x <= self.smallWindow.x + TexSize["ui/smallWindow.png"].w * self.scale and y >= self.smallWindow.y and y <= self.smallWindow.y + TexSize["ui/smallWindow.png"].h * self.scale and self.smallWindow.enabled) then
+    if (x >= self.smallWindow.x and x <= self.smallWindow.x + TexSize["ui/smallWindow.png"].w * InvScale and y >= self.smallWindow.y and y <= self.smallWindow.y + TexSize["ui/smallWindow.png"].h * InvScale and self.smallWindow.enabled) then
         clickedInside = true
     else
         clickedInside = false

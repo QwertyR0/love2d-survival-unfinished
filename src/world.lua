@@ -80,10 +80,10 @@ function RenderObjects1() -- rendered before
                 love.graphics.setColor(1, 1, 1, 0.3)
             end
 
-            love.graphics.draw(Tex["tree1.png"], (v.x-1)*Scale*TileW, (v.y-2)*Scale*TileH, 0, Scale, Scale)
+            love.graphics.draw(Tex["tree1.png"], (v.x - 1) * Scale * TileW, (v.y - 2) * Scale * TileH, 0, Scale, Scale)
             love.graphics.setColor(1, 1, 1, 1)
         elseif v.type == "rock" then
-            love.graphics.draw(Tex["smallRock.png"], (v.x-1)*Scale*TileW, (v.y-1)*Scale*TileH, 0, Scale, Scale)
+            love.graphics.draw(Tex["smallRock.png"], (v.x - 1) * Scale * TileW, (v.y - 1) * Scale * TileH, 0, Scale, Scale)
         end
     end
 end
@@ -91,7 +91,7 @@ end
 function RenderObjects2() -- rendered after
     for k, v in ipairs(World.objects) do
         if v.type == "tree" then
-            love.graphics.draw(Tex["tree2.png"], (v.x-1)*Scale*TileW, (v.y-1)*Scale*TileH, 0, Scale, Scale)
+            love.graphics.draw(Tex["tree2.png"], (v.x - 1) * Scale * TileW, (v.y - 1) * Scale * TileH, 0, Scale, Scale)
         end
     end
 end
