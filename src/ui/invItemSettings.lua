@@ -15,18 +15,20 @@ local function semiClick(x, y, button, isTouch, id)
     if id == "drop" then
         local actionItem = Char.inventory[Inv.smallWindow.itemSel + 5]
         table.remove(Char.inventory, Inv.smallWindow.itemSel + 5)
+        Inv.smallWindow.enabled = false
+
     -- eat:
     elseif id == "eat" and Inv.smallWindow.properties.eat.eatable then
         
     -- set:
     elseif id == "set" then
-        
+        Inv.smallWindow.state = 1
     end
 end
 
 function itemMenu:new()
     self.enabled = false
-    self.state = 0 -- if 0 menu, if 1 set
+    self.state = 0 -- if 0 menu, if 1 setting place
     self.properties = {}
     self.itemSel = 0
     self.x = love.graphics.getWidth() -- hide the mess just in case...
@@ -72,6 +74,11 @@ function itemMenu:render()
             else
                 love.graphics.draw(Tex["ui/drop.png"], self.buttons.mid.x, self.buttons.mid.y, 0, InvScale, InvScale)
             end
+        elseif self.state == 1 then
+            love.graphics.setFont(Fonts.small)
+            local textW = Fonts.small:getWrap("Please Press Press a Number From 1 to 5", 120)
+            local tX, tY = self.x + TexSize["ui/smallWindow.png"].hw * InvScale - textW / 2, self.y + TexSize["ui/smallWindow.png"].hh * InvScale - 20 * InvScale
+            love.graphics.printf("Please Press Press a Number From 1 to 5", tX, tY, 120, "center")
         end
     end
 end
@@ -98,7 +105,8 @@ function itemMenu:set()
     local prop = GetItemInfo(Char.inventory[self.itemSel + 5].id)
     prop.amount = Char.inventory[self.itemSel + 5].number
     self.properties = prop
-
+    self.properties.place = self.itemSel + 5 -- might remove this stupid method as there 
+                                             -- will be one instance of every item.
     -- buttons:
     self.buttons.set.x = self.x + TexSize["ui/smallWindow.png"].hw * InvScale - TexSize["ui/wideButton.png"].hw * InvScale
     self.buttons.set.y = self.y + TexSize["ui/smallWindow.png"].h*InvScale - 20 * InvScale
@@ -112,6 +120,17 @@ function itemMenu:set()
         self.buttons.right.x = self.x + (TexSize["ui/smallWindow.png"].hw/2 * 3) * InvScale - TexSize["ui/eat.png"].hw * InvScale
     else
         self.buttons.mid.x = self.x + TexSize["ui/smallWindow.png"].hw * InvScale - TexSize["ui/eat.png"].hw * InvScale
+    end
+end
+
+function itemMenu:keypress(key)
+    if IsInteger(key) and self.state == 1 then
+        key = tonumber(key)
+        if key <= 5 and key >= 1 then
+            RelocateElems(Char.inventory, self.properties.place, key)
+            self.state = 0
+            self.enabled = false
+        end
     end
 end
 

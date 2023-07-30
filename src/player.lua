@@ -34,7 +34,8 @@ function Player:new(x, y)
     self.vely = 0
     self.currentAnimation = "front"
     self.selected = 1
-    self.inventory = {{id = "apple", number = 1}, {id = "apple", number = 1},{id = "apple", number = 1},{id = "apple", number = 1},{id = "apple", number = 1},{id = "apple", number = 1},{id = "apple", number = 1}, {id = "bread", number = 2}, {id = "bread", number = 2}, {id = "bread", number = 2}, {id = "bread", number = 2}, {id = "bread", number = 2}, {id = "bread", number = 2}}
+    self.inventory = {}
+    self.interactions = {} -- if is in interactions with multipile objects
     self.__index = self
 
     self.empt = {

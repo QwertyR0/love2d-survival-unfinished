@@ -17,9 +17,8 @@ function love.load()
     require("src.helper.buttons")
     Cam = require("libs.camera")
     
-    UI.init()
     SpriteSheet:new("playerSheet.png", 16, 16, Scale)
-
+    UI.InfoPrompt:init()
     
     Char = Player:new()
     Char.hp = 3
@@ -77,6 +76,7 @@ function love.draw()
     UI.inv(Inv)
     Inv:draw()
     UI.info(seed)
+    UI.InfoPrompt:render()
 end
 
 function love.keypressed(key)

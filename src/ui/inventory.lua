@@ -33,6 +33,7 @@ local function onInvButtonPress(x, y, button, istouch, id)
     if not (x >= Inv.smallWindow.x and x <= Inv.smallWindow.x+TexSize["ui/smallWindow.png"].w*InvScale and y >= Inv.smallWindow.y and y <= Inv.smallWindow.y+TexSize["ui/smallWindow.png"].h*InvScale and Inv.smallWindow.enabled) then
         if Inv.smallWindow.itemSel == bPlace and Inv.smallWindow.enabled then
             Inv.smallWindow.enabled = false
+            Inv.smallWindow.state = 0
         elseif Char.inventory[bPlace + 5] then -- SMELLS LIKE  DUCKGTAPE
             Inv.smallWindow.enabled = true
             Inv.smallWindow.itemSel = bPlace -- PUT SOME HERE TOOO MHMHMMM
@@ -79,6 +80,7 @@ end
 function Inventory:update()
     if closeSum >= #Char.inventory - 5 and clickedInside == false then
         self.smallWindow.enabled = false
+        self.smallWindow.state = 0
     end
 
     closeSum = 0
@@ -89,6 +91,7 @@ function Inventory:draw()
         love.graphics.setFont(Fonts.medium)
         love.graphics.draw(Tex["ui/invBig.png"], love.graphics.getWidth()/2-TexSize["ui/invBig.png"].hw*InvScale, love.graphics.getHeight()/2-TexSize["ui/invBig.png"].hh*InvScale, 0, InvScale, InvScale)
         love.graphics.print("Inventory:", love.graphics.getWidth()/2-73, love.graphics.getHeight()/2-185)
+
         for i = 6, #Char.inventory do
             itemPlace(Char.inventory[i], i-5, Fonts.small)
         end
@@ -113,34 +116,41 @@ function Inventory:toggle()
 end
 
 function Inventory:keyPressed(key)
-    if key == "1" then
-        self.selected = 1
-    elseif key == "2" then
-        self.selected = 2
-    elseif key == "3" then
-        self.selected = 3
-    elseif key == "4" then
-        self.selected = 4
-    elseif key == "5" then
-        self.selected = 5
-    end
-
-    if key == "tab" then
-        self:toggle()
-
-        if self.enable then
-            self.smallWindow.enabled = false
+    
+    if self.smallWindow.state ~= 1 then
+        if key == "1" then
+            self.selected = 1
+        elseif key == "2" then
+            self.selected = 2
+        elseif key == "3" then
+            self.selected = 3
+        elseif key == "4" then
+            self.selected = 4
+        elseif key == "5" then
+            self.selected = 5
         end
     end
-
+    
+    
+    if key == "tab" then
+        self:toggle()
+        
+        if self.enable then
+            self.smallWindow.enabled = false
+            self.smallWindow.state = 0
+        end
+    end
+    
     if key == "escape" then
         self:hide()
         self.smallWindow.enabled = false
+        self.smallWindow.state = 0
     end
+    
+    self.smallWindow:keypress(key)
 end
 
 function Inventory:mousePressed(x, y, button)
-
     if (x >= self.smallWindow.x and x <= self.smallWindow.x + TexSize["ui/smallWindow.png"].w * InvScale and y >= self.smallWindow.y and y <= self.smallWindow.y + TexSize["ui/smallWindow.png"].h * InvScale and self.smallWindow.enabled) then
         clickedInside = true
     else

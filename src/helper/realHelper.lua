@@ -6,7 +6,9 @@ Fonts = {
     big = love.graphics.newFont(40),
     huge = love.graphics.newFont(50)
 }
-    
+ 
+--[[
+
 local function countEmptyPixels(image, axis, quad)
     local emptyPixelCount = 0
     local quadX, quadY, quadW, quadH = quad:getViewport()
@@ -43,6 +45,8 @@ local function countEmptyPixels(image, axis, quad)
 
     return emptyPixelCount
 end
+
+]]
 
 function CheckBoxCollision(box1, box2)
     return box1.x < box2.x + box2.width and
@@ -136,4 +140,32 @@ function GetItemInfo(name)
     end
 end
 
-return {countEmptyPixels = countEmptyPixels}
+function IsInteger(str)
+    return not (str == "" or str:find("%D"))
+end  
+
+function RelocateElems(list, fromIndex, toIndex)
+    local element = list[fromIndex]
+    table.remove(list, fromIndex)
+    table.insert(list, toIndex, element)
+end
+
+function LogTable(tableToLog, indent)
+    if type(tableToLog) == "table" then
+        indent = indent or 0
+        local indentation = string.rep(" ", indent)
+        for key, value in pairs(tableToLog) do
+            if type(value) == "table" then
+                print(indentation .. key .. " = {")
+                LogTable(value, indent + 2)
+                print(indentation .. "}")
+            else
+                print(indentation .. key .. " = " .. tostring(value))
+            end
+        end
+    else
+        print("Error: Not a table")
+    end
+end
+
+-- return {countEmptyPixels = countEmptyPixels}

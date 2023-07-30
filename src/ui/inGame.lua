@@ -1,12 +1,9 @@
 local spaceBetween = 10
 local uiScale = 5
-local invScale = 4
+local barScale = 4
 local info = false
 
 UI = {}
-
-function UI.init()
-end
 
 function UI.heart(charHealth)
     if charHealth >= 1 then
@@ -30,27 +27,27 @@ end
 
 function UI.inv(inv)
 
-    love.graphics.draw(Tex["ui/inv.png"], love.graphics.getWidth()/2-TexSize["ui/inv.png"].w*invScale/2, love.graphics.getHeight()-TexSize["ui/inv.png"].h*invScale-10, 0, invScale, invScale)
+    love.graphics.draw(Tex["ui/inv.png"], love.graphics.getWidth()/2-TexSize["ui/inv.png"].w*barScale/2, love.graphics.getHeight()-TexSize["ui/inv.png"].h*barScale-10, 0, barScale, barScale)
 
     for i = 1, 5 do
-        local preX = love.graphics.getWidth()/2-TexSize["ui/inv.png"].w*invScale/2+16
-        local preY = love.graphics.getHeight()-TexSize["ui/inv.png"].h*invScale+6
+        local preX = love.graphics.getWidth()/2-TexSize["ui/inv.png"].w*barScale/2+16
+        local preY = love.graphics.getHeight()-TexSize["ui/inv.png"].h*barScale+6
         
         if Char.inventory[i] then
             if Char.inventory[i].id == "apple" then
-                love.graphics.draw(Tex["items/apple.png"], preX + (i - 1) * 56, preY, 0, invScale, invScale)
+                love.graphics.draw(Tex["items/apple.png"], preX + (i - 1) * 56, preY, 0, barScale, barScale)
             elseif Char.inventory[i].id == "bread" then
-                love.graphics.draw(Tex["items/bread.png"], preX + (i - 1) * 56 - invScale, preY - invScale, 0, invScale, invScale)
+                love.graphics.draw(Tex["items/bread.png"], preX + (i - 1) * 56 - barScale, preY - barScale, 0, barScale, barScale)
             elseif Char.inventory[i].id == "apple" then
-                love.graphics.draw(Tex["items/apple.png"], preX + (i - 1) * 56, preY, 0, invScale, invScale)
+                love.graphics.draw(Tex["items/apple.png"], preX + (i - 1) * 56, preY, 0, barScale, barScale)
             elseif Char.inventory[i].id == "apple" then
-                love.graphics.draw(Tex["items/apple.png"], preX + (i - 1) * 56, preY, 0, invScale, invScale)
+                love.graphics.draw(Tex["items/apple.png"], preX + (i - 1) * 56, preY, 0, barScale, barScale)
             end
         end
 
         if inv.selected ~= i then
             love.graphics.setColor(0, 0, 0, 0.4)
-            love.graphics.rectangle("fill", preX + (i - 1) * 56 - invScale, preY - invScale, 13*invScale, 13*invScale)
+            love.graphics.rectangle("fill", preX + (i - 1) * 56 - barScale, preY - barScale, 13*barScale, 13*barScale)
             love.graphics.setColor(1,1,1,1)
         end
     end
@@ -68,6 +65,27 @@ function UI.info(seed)
         love.graphics.print(tostring(Char.y / Scale), love.graphics.getWidth() - 140, 55, 0, 1, 1)
     end
 end
+
+local infoPrompt = {}
+infoPrompt.__index = infoPrompt
+
+function infoPrompt:init()
+    self.enabled = false
+    self.text = ""
+    self.font = Fonts.medium
+    self.__index = self
+end
+
+function infoPrompt:render()
+    if self.enabled then
+        love.graphics.setFont(self.font)
+        
+        local tX, tY = love.graphics.getWidth()/2 - self.font:getWidth(self.text)/2, love.graphics.getHeight() - 60
+        love.graphics.print(self.text, tX, tY)
+    end
+end
+
+UI.InfoPrompt = infoPrompt
 
 function ToggleInfo()
     info = not(info)
