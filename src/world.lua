@@ -95,7 +95,7 @@ function RenderObjects2() -- rendered after
         end
     end
 end
-
+    
 function RandomPlayerPos()
     local spawnables = {}
 

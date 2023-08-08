@@ -7,8 +7,9 @@ Fonts = {
     huge = love.graphics.newFont(50)
 }
  
---[[
+-- no need this currently:
 
+--[[
 local function countEmptyPixels(image, axis, quad)
     local emptyPixelCount = 0
     local quadX, quadY, quadW, quadH = quad:getViewport()
@@ -150,6 +151,7 @@ function RelocateElems(list, fromIndex, toIndex)
     table.insert(list, toIndex, element)
 end
 
+-- NOTE: developement only
 function LogTable(tableToLog, indent)
     if type(tableToLog) == "table" then
         indent = indent or 0
@@ -166,6 +168,32 @@ function LogTable(tableToLog, indent)
     else
         print("Error: Not a table")
     end
+end
+
+-- size of object on pickup:
+function EaseOutExpo(x)
+    local y = 0
+
+    if x == 1 then
+        y = 1
+    else
+        y = 1 - math.pow(2, -10 * x)
+    end
+
+    return y
+end
+
+-- movement of object on pickup:
+function EaseInExpo(x)
+    local y = 0
+
+    if x == 0 then
+        y = 0
+    else
+        y = 1 - math.pow(2, 10 * x - 10)
+    end
+
+    return y
 end
 
 -- return {countEmptyPixels = countEmptyPixels}

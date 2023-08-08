@@ -34,11 +34,11 @@ function love.load()
     Char.x = r.x*Scale*TileW
     Char.y = r.y*Scale*TileH
 
-    Inv = Inventory:new()
+    Inv = Inventory:new() -- create new inventorys
 end
 
 function love.update(dt)
-    Camera:lookAt(Char.x, Char.y)
+    Camera:lookAt(Char.x, Char.y) -- follow player
 
     local w = love.graphics.getWidth()
     local h = love.graphics.getHeight()
@@ -66,22 +66,22 @@ end
 function love.draw()
     Camera:attach()
         RenderWorld()
-        RenderObjects2()
+        RenderObjects2() -- Z value matters 😀
         HoverRender()
         PlayerRender()
         RenderObjects1()
     Camera:detach()
 
     UI.heart(Char.hp)
-    UI.inv(Inv)
+    UI.inv(Inv) -- pass the bigger window for the smaller selection inventory
     Inv:draw()
-    UI.info(seed)
-    UI.InfoPrompt:render()
+    UI.info(seed) -- f1
+    UI.InfoPrompt:render() -- interection indicator
 end
 
 function love.keypressed(key)
     if key == "f1" then
-        ToggleInfo()
+        ToggleInfo() -- info
     end
 
     Inv:keyPressed(key)

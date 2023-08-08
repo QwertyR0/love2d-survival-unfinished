@@ -80,7 +80,7 @@ function infoPrompt:render()
     if self.enabled then
         love.graphics.setFont(self.font)
         
-        local tX, tY = love.graphics.getWidth()/2 - self.font:getWidth(self.text)/2, love.graphics.getHeight() - 60
+        local tX, tY = love.graphics.getWidth() / 2 - self.font:getWidth(self.text) / 2, love.graphics.getHeight() - 60
         love.graphics.print(self.text, tX, tY)
     end
 end
