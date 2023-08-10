@@ -1,3 +1,5 @@
+local items = require("src.helper.itemData")
+
 Fonts = {
     default = love.graphics.getFont(),
     tiny = love.graphics.newFont(15),
@@ -75,11 +77,6 @@ function GetMouseRealPos()
     return {x = moX + camX, y = moY + camY}
 end
 
--- TODO:
-function PlayerSpawn(seed)
-    -- this will be used for deletin spawn objects
-end
-
 function StrSplit(str)
     local words = {}
     
@@ -99,7 +96,7 @@ end
 function IsOutOfBounds(x, y, width, height)
     local screenWidth = love.graphics.getWidth()
     local screenHeight = love.graphics.getHeight()
-
+    
     -- Check if the rectangle is out of the screen's bounds
     if x < 0 or x + width > screenWidth or y < 0 or y + height > screenHeight then
         return true
@@ -108,51 +105,18 @@ function IsOutOfBounds(x, y, width, height)
     end
 end
 
-local items = {
-    apple = {
-        id = "apple",
-        description = "A very tasty fruit",
-        max = 7,
-        eat = {
-            eatable = true,
-            health = 1,
-            power = nil
-        },
-        pickable = false,
-        TexPath = "items/apple.png"
-    },
-
-    bread = {
-        id = "bread",
-        description = "bread bread bread",
-        max = 5,
-        eat = {
-            eatable = true,
-            health = 2,
-            power = nil
-        },
-        pickable = false,
-        TexPath = "items/bread.png"
-    },
-
-    rock = {
-        id = "rock",
-        description = "feels hard to hold",
-        max = 15,
-        eat = {
-            eatable = false,
-        },
-        pickable = true,
-        TexPath = "smallRock.png"
-    },
-
-    tree = {
-        pickable = false
-    }
-}
-
-function GetItemInfo(name)
+function GetItemInfo(name, donotConvert, Idontevenknwoatthispoint)
+    Idontevenknwoatthispoint = Idontevenknwoatthispoint or false
+    if name == "" or not name then return false end
     local info = items[name]
+
+    donotConvert = donotConvert or false
+
+    -- TODO: connect 3'rd argument to itemDatas as "exepction In convert" and get it here automatically
+
+    if info.converTo and ((not donotConvert) or (Idontevenknwoatthispoint and name == "rock")) then
+        info = items[info.converTo]
+    end
 
     if info then
         return info
@@ -215,6 +179,27 @@ function EaseInExpo(x)
     end
 
     return y
+end
+
+function EaseOutQuad(t)
+    return -t * (t - 2)
+end
+
+function EaseInQuad(t)
+    return t * t
+end
+
+function EaseInCubic(t)
+    return t * t * t
+end
+
+function EaseInOutQuad(t)
+    t = t * 2
+    if t < 1 then
+        return 0.5 * t * t
+    else
+        return -0.5 * ((t - 1) * (t - 3) - 1)
+    end
 end
 
 function TableFind(list, elem, name)

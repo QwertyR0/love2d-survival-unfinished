@@ -367,9 +367,12 @@ function PlayerUpdate(dt)
 
     checkInteractions(Char.x, Char.y)
     
-    if Char.interactions.object.type ~= "" and GetItemInfo(Char.interactions.object.type).pickable then
+    if Char.interactions.object.type ~= "" and AddToInv(GetItemInfo(Char.interactions.object.type, true, true), true) then
         UI.InfoPrompt.enabled = true
         UI.InfoPrompt.text = "Press E to Pickup \"" .. Char.interactions.object.type .. "\""
+    elseif not AddToInv(GetItemInfo(Char.interactions.object.type), true) and GetItemInfo(Char.interactions.object.type) and GetItemInfo(Char.interactions.object.type).pickable then
+        UI.InfoPrompt.enabled = true
+        UI.InfoPrompt.text = "Inventory Full..."
     else
         UI.InfoPrompt.enabled = false
     end
@@ -396,20 +399,30 @@ function Pickup()
                 (Char.interactions.object.x - 1) * Scale * TileW,
                 (Char.interactions.object.y - 1) * Scale * TileH,
                 Scale,
-                1,
+                0.7,
                 DynamicCollect,
                 Char.interactions.object.type
             )
 
-            print(ob.x, ob.y, Char.interactions.object.x, Char.interactions.object.y)
-            ob:setTarget(Char.x + 0.5 * Scale * TileW, Char.y + 0.5 * Scale * TileH)
+            ob:setTarget(Char.x - 0.5 * Scale * TileW, Char.y - 0.5 * Scale * TileH)
             DynamicManager:add(ob)
         end
     end
 end
 
-function AddToInv(item, check)
-    local place = TableFind(Char.inventory, item.id, "id")
+function AddToInv(item, check, costum)
+    if not item then return false end
+    if not item.pickable then
+        return false
+    end
+    
+    local place
+
+    if costum then
+        place = TableFind(Char.inventory, item[costum], "id")
+    else
+        place = TableFind(Char.inventory, item.id, "id")
+    end
 
     if not (place) then
         if not (check) then table.insert(Char.inventory, {id = item.id, number = 1}) end
@@ -423,5 +436,43 @@ function AddToInv(item, check)
 end
 
 function DynamicCollect(id)
+    -- there are special situations:
+    if id == "rock" then
+        id = "stone"
+    end
+    
     AddToInv(GetItemInfo(id))
+end
+
+function FreeSpawn()
+    local x = math.floor((Char.x/Scale)/TileW)
+    local y = math.floor((Char.y/Scale)/TileH)
+
+    local checkTable = {
+        {x = x, y = y},         -- mid
+        {x = x+1, y = y},       -- right
+        {x = x-1, y = y},       -- left
+        {x = x, y = y-1},       -- up 
+        {x = x, y = y+1},       -- down
+        {x = x+1, y = y+1},     -- down right
+        {x = x-1, y = y+1},     -- down left
+        {x = x+1, y = y-1},     -- up right
+        {x = x-1, y = y-1}      -- up left
+    }
+
+    for _, cv in ipairs(checkTable) do
+        for k, ov in ipairs(World.objects) do
+            if ov.x == cv.x and ov.y == cv.y then
+                --TODO: connect to costum break events of all items
+                local id = ov.type
+
+                if id == "rock" then
+                    id = "stone"
+                end
+
+                AddToInv(GetItemInfo(id), false)
+                table.remove(World.objects, k)
+            end
+        end
+    end
 end

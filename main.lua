@@ -32,11 +32,12 @@ function love.load()
 
     local r = RandomPlayerPos()
 
-    Char.x = r.x*Scale*TileW
-    Char.y = r.y*Scale*TileH
+    Char.x = r.x*Scale*TileW - 8*Scale
+    Char.y = r.y*Scale*TileH - 8*Scale
 
     Inv = Inventory:new() -- create new inventory
     DynamicManager:init()
+    FreeSpawn()
 end
 
 function love.update(dt)

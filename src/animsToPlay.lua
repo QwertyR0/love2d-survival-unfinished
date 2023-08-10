@@ -5,7 +5,7 @@ function Dynamic:init(type, x, y, scale, duration, f, id)
     id = id or 0
     self.id = id
     self.f = f
-    self.type = GetItemInfo(type)
+    self.type = GetItemInfo(type, true)
     self.scale = scale
     self.duration = duration
     self.currentTime = 0
@@ -42,17 +42,15 @@ function DynamicManager:update(dt)
 
         if v.currentTime < v.duration then
             local t = v.currentTime / v.duration
-            local easedT = EaseOutExpo(t)
+            local easedT = EaseInOutQuad(t)
             v.x = v.ix + (v.tx - v.ix) * easedT
             v.y = v.iy + (v.ty - v.iy) * easedT
-            print(v.x, v.y, Char.x, Char.y)
         else
             v.x = v.tx
             v.y = v.ty
 -- 
             if v.f ~= nil then
                 v.f(v.id)
-                print("fin")
             end
 
             table.remove(self.dynamics, k)

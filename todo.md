@@ -1,12 +1,14 @@
 # TODO:
 
-- rock picking
-- delete envoriment around player on spawn and give the item automatically
+## pressing e near trees crash
+
+- drop real shit
+- costum break functions for items
 - crafting
 - building
 - day/night cycle
 - start menu
-- world create menu
+- world create menu and game menu
 - mobs
 - game save
 - optimization

@@ -7,19 +7,14 @@ InvScale = 3.5
 
 local function itemPlace(item, place, s)
     if place <= 10 then
+        local itemi = GetItemInfo(item.id)
         local row = math.ceil(place / itemsPerRow)
         local column = (place - 1) % itemsPerRow + 1
 
         local placeX = love.graphics.getWidth()/2 - 200 + (column - 1) * spaceBetween
         local placeY = love.graphics.getHeight()/2 - 120 + (row - 1) * 120
 
-        if item.id == "apple" then
-            love.graphics.draw(Tex["items/apple.png"], placeX, placeY, 0, itemScale, itemScale)
-        elseif item.id == "bread" then
-            love.graphics.draw(Tex["items/bread.png"], placeX, placeY, 0, itemScale, itemScale)
-        elseif item.id == "rock" then
-            love.graphics.draw(Tex["items/rock.png"], placeX, placeY, 0, itemScale, itemScale)
-        end
+        love.graphics.draw(Tex[itemi.TexPath], placeX, placeY, 0, itemScale, itemScale)
 
         love.graphics.setFont(s)
         love.graphics.printf(item.id, placeX - 25 * itemScale, placeY + 55, 300, "center")
