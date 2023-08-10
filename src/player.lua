@@ -67,7 +67,7 @@ local function checkCollisions(oldX, oldY)
         end
     end
     
-    for k, v in ipairs(World.objects) do
+    for _, v in ipairs(World.objects) do
         if v.type == "tree" then
             local tcol = GetTreeCollision(v.x, v.y)
 
@@ -199,6 +199,7 @@ local function checkInteractions(x, y)
         if distance < Char.interactions.score then
             Char.interactions.score = distance
             Char.interactions.object = v
+            Char.interactions.index = k
         end
     end
 
@@ -215,8 +216,8 @@ function Player:new(x, y)
     self.vely = 0
     self.currentAnimation = "front"
     self.selected = 1
-    self.inventory = {}
-    self.interactions = {score = math.huge, object = ""} -- if is in interactions with multipile objects
+    self.inventory = {{id = "apple", number = 1}, {id = "apple", number = 1}, {id = "apple", number = 1}, {id = "apple", number = 1}, {id = "apple", number = 1}}
+    self.interactions = {score = math.huge, object = {type = ""}, index = 0} -- if is in interactions with multipile objects
     self.__index = self
 
     self.empt = {
@@ -366,7 +367,7 @@ function PlayerUpdate(dt)
 
     checkInteractions(Char.x, Char.y)
     
-    if Char.interactions.object.type ~= "" then
+    if Char.interactions.object.type ~= "" and GetItemInfo(Char.interactions.object.type).pickable then
         UI.InfoPrompt.enabled = true
         UI.InfoPrompt.text = "Press E to Pickup \"" .. Char.interactions.object.type .. "\""
     else
@@ -381,4 +382,46 @@ function PlayerRender()
     Char.sheet:draw(Char.x, Char.y, 0, {scale = Scale, ofx = 8, ofy = 8})
 
     -- love.graphics.points(Char.x, Char.y)
+end
+
+function Pickup()
+    if Char.interactions.object.type ~= "" and GetItemInfo(Char.interactions.object.type).pickable then
+        -- check for max'ibility and run animation for it
+        if AddToInv(GetItemInfo(Char.interactions.object.type), true) then
+            table.remove(World.objects, Char.interactions.index)
+
+            -- FIXME: Pass camera based coordinates of the object itself!!!!!!!!!
+            local ob = Dynamic:init(
+                Char.interactions.object.type,
+                (Char.interactions.object.x - 1) * Scale * TileW,
+                (Char.interactions.object.y - 1) * Scale * TileH,
+                Scale,
+                1,
+                DynamicCollect,
+                Char.interactions.object.type
+            )
+
+            print(ob.x, ob.y, Char.interactions.object.x, Char.interactions.object.y)
+            ob:setTarget(Char.x + 0.5 * Scale * TileW, Char.y + 0.5 * Scale * TileH)
+            DynamicManager:add(ob)
+        end
+    end
+end
+
+function AddToInv(item, check)
+    local place = TableFind(Char.inventory, item.id, "id")
+
+    if not (place) then
+        if not (check) then table.insert(Char.inventory, {id = item.id, number = 1}) end
+        return true
+    elseif place and Char.inventory[place].number < item.max then
+        if not (check) then Char.inventory[place].number = Char.inventory[place].number + 1 end
+        return true
+    else
+        return false
+    end
+end
+
+function DynamicCollect(id)
+    AddToInv(GetItemInfo(id))
 end

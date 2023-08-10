@@ -10,11 +10,14 @@ local itemMenu = {}
 itemMenu.__index = itemMenu
 
 local function semiClick(x, y, button, isTouch, id)
-    
     -- drop:
     if id == "drop" then
         local actionItem = Char.inventory[Inv.smallWindow.itemSel + 5]
-        table.remove(Char.inventory, Inv.smallWindow.itemSel + 5)
+        if actionItem.number <= 1 then
+            table.remove(Char.inventory, Inv.smallWindow.itemSel + 5)
+        else
+            Char.inventory[Inv.smallWindow.itemSel + 5].number = actionItem.number - 1
+        end
         Inv.smallWindow.enabled = false
 
     -- eat:

@@ -17,6 +17,8 @@ local function itemPlace(item, place, s)
             love.graphics.draw(Tex["items/apple.png"], placeX, placeY, 0, itemScale, itemScale)
         elseif item.id == "bread" then
             love.graphics.draw(Tex["items/bread.png"], placeX, placeY, 0, itemScale, itemScale)
+        elseif item.id == "rock" then
+            love.graphics.draw(Tex["items/rock.png"], placeX, placeY, 0, itemScale, itemScale)
         end
 
         love.graphics.setFont(s)
@@ -116,7 +118,7 @@ function Inventory:toggle()
 end
 
 function Inventory:keyPressed(key)
-    
+
     if self.smallWindow.state ~= 1 then
         if key == "1" then
             self.selected = 1
@@ -130,8 +132,7 @@ function Inventory:keyPressed(key)
             self.selected = 5
         end
     end
-    
-    
+
     if key == "tab" then
         self:toggle()
         
@@ -140,13 +141,13 @@ function Inventory:keyPressed(key)
             self.smallWindow.state = 0
         end
     end
-    
+
     if key == "escape" then
         self:hide()
         self.smallWindow.enabled = false
         self.smallWindow.state = 0
     end
-    
+
     self.smallWindow:keypress(key)
 end
 

@@ -38,8 +38,8 @@ function UI.inv(inv)
                 love.graphics.draw(Tex["items/apple.png"], preX + (i - 1) * 56, preY, 0, barScale, barScale)
             elseif Char.inventory[i].id == "bread" then
                 love.graphics.draw(Tex["items/bread.png"], preX + (i - 1) * 56 - barScale, preY - barScale, 0, barScale, barScale)
-            elseif Char.inventory[i].id == "apple" then
-                love.graphics.draw(Tex["items/apple.png"], preX + (i - 1) * 56, preY, 0, barScale, barScale)
+            elseif Char.inventory[i].id == "rock" then
+                love.graphics.draw(Tex["items/rock.png"], preX + (i - 1) * 56, preY, 0, barScale, barScale)
             elseif Char.inventory[i].id == "apple" then
                 love.graphics.draw(Tex["items/apple.png"], preX + (i - 1) * 56, preY, 0, barScale, barScale)
             end
@@ -72,7 +72,7 @@ infoPrompt.__index = infoPrompt
 function infoPrompt:init()
     self.enabled = false
     self.text = ""
-    self.font = Fonts.medium
+    self.font = Fonts.small
     self.__index = self
 end
 
@@ -80,7 +80,7 @@ function infoPrompt:render()
     if self.enabled then
         love.graphics.setFont(self.font)
         
-        local tX, tY = love.graphics.getWidth() / 2 - self.font:getWidth(self.text) / 2, love.graphics.getHeight() - 60
+        local tX, tY = love.graphics.getWidth() / 2 - self.font:getWidth(self.text) / 2, love.graphics.getHeight() - 120
         love.graphics.print(self.text, tX, tY)
     end
 end

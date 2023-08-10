@@ -15,14 +15,15 @@ function love.load()
     require("src.ui.inventory")
     require("src.mouseHover")
     require("src.helper.buttons")
+    require("src.animsToPlay")
     Cam = require("libs.camera")
-    
+
     SpriteSheet:new("playerSheet.png", 16, 16, Scale)
     UI.InfoPrompt:init()
-    
+
     Char = Player:new()
     Char.hp = 3
-    
+
     Camera = Cam.new(Char.x, Char.y)
 
     seed = 10000 * love.math.random()
@@ -34,7 +35,8 @@ function love.load()
     Char.x = r.x*Scale*TileW
     Char.y = r.y*Scale*TileH
 
-    Inv = Inventory:new() -- create new inventorys
+    Inv = Inventory:new() -- create new inventory
+    DynamicManager:init()
 end
 
 function love.update(dt)
@@ -61,6 +63,7 @@ function love.update(dt)
     PlayerUpdate(dt)
     HoverUpdate()
     Inv:update()
+    DynamicManager:update(dt)
 end
 
 function love.draw()
@@ -70,8 +73,9 @@ function love.draw()
         HoverRender()
         PlayerRender()
         RenderObjects1()
+        DynamicManager:render()
     Camera:detach()
-
+    
     UI.heart(Char.hp)
     UI.inv(Inv) -- pass the bigger window for the smaller selection inventory
     Inv:draw()
@@ -85,6 +89,10 @@ function love.keypressed(key)
     end
 
     Inv:keyPressed(key)
+    
+    if key == "e" then
+        Pickup()
+    end
 end
 
 function love.mousepressed(x, y, button, istouch)

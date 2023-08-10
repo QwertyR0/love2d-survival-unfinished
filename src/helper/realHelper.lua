@@ -112,22 +112,42 @@ local items = {
     apple = {
         id = "apple",
         description = "A very tasty fruit",
-        max = 10,
+        max = 7,
         eat = {
             eatable = true,
             health = 1,
             power = nil
-        }
+        },
+        pickable = false,
+        TexPath = "items/apple.png"
     },
+
     bread = {
         id = "bread",
         description = "bread bread bread",
         max = 5,
         eat = {
-            eatable = false,
+            eatable = true,
             health = 2,
             power = nil
-        }
+        },
+        pickable = false,
+        TexPath = "items/bread.png"
+    },
+
+    rock = {
+        id = "rock",
+        description = "feels hard to hold",
+        max = 15,
+        eat = {
+            eatable = false,
+        },
+        pickable = true,
+        TexPath = "smallRock.png"
+    },
+
+    tree = {
+        pickable = false
     }
 }
 
@@ -143,12 +163,13 @@ end
 
 function IsInteger(str)
     return not (str == "" or str:find("%D"))
-end  
+end
 
 function RelocateElems(list, fromIndex, toIndex)
-    local element = list[fromIndex]
-    table.remove(list, fromIndex)
-    table.insert(list, toIndex, element)
+    local element1 = list[fromIndex]
+    local element2 = list[toIndex]
+    list[fromIndex] = element2
+    list[toIndex] = element1
 end
 
 -- NOTE: developement only
@@ -194,6 +215,28 @@ function EaseInExpo(x)
     end
 
     return y
+end
+
+function TableFind(list, elem, name)
+    local r = false
+
+    if name == nil then
+        for k, v in pairs(list) do
+            if v == elem then
+                r = k
+                break
+            end
+        end
+    else
+        for k, v in pairs(list) do
+            if v[name] == elem then
+                r = k
+                break
+            end
+        end
+    end
+
+    return r
 end
 
 -- return {countEmptyPixels = countEmptyPixels}
