@@ -1,6 +1,5 @@
 # 64Survival
-A simple survival game made with LÖVE which has a low resulation of 64x64
-test
+A simple survival game that was being made with LÖVE
 
 # LIBS USED:
 - **HUMP**
